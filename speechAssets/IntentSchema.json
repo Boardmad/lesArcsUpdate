@@ -1,0 +1,16 @@
+{
+  "intents": [
+    {
+      "intent": "RefreshIntent"
+    },
+    {
+      "intent": "StatusIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    }
+  ]
+}
