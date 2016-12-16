@@ -87,21 +87,6 @@ HistoryBuffSkill.prototype.intentHandlers = {
         handleStatusRequest(intent, session, response);
     },
 
-    "AMAZON.HelpIntent": function (intent, session, response) {
-        var speechText = "With History Buff, you can get historical events for any day of the year.  " +
-            "For example, you could say today, or August thirtieth, or you can say exit. Now, which day do you want?";
-        var repromptText = "Which day do you want?";
-        var speechOutput = {
-            speech: speechText,
-            type: AlexaSkill.speechOutputType.PLAIN_TEXT
-        };
-        var repromptOutput = {
-            speech: repromptText,
-            type: AlexaSkill.speechOutputType.PLAIN_TEXT
-        };
-        response.ask(speechOutput, repromptOutput);
-    },
-
     "AMAZON.StopIntent": function (intent, session, response) {
         var speechOutput = {
                 speech: "Goodbye",
@@ -147,21 +132,37 @@ function getWelcomeResponse(response) {
  * Issues a put to the parsehub API to initiate the parse of the j2Ski website for latest data.
  */
 function handleRefreshRequest(intent, session, response){
-    // ToDo Write put request to parsehub API
     
-/**    var request = require('request');
+   // var request = require('request');
 
     request({
-        uri: 'https://www.parsehub.com/api/v2/projects/trrfV_gMzTue/run',
-        method: 'POST',
-        form: {
-            api_key: "tN2yxyUXZPzL"
-        }
-    }, function (err, resp, body) {
-        console.log(body);
+    uri: urlPrefix,
+    method: 'POST',
+    form: {
+        api_key: "tN2yxyUXZPzL",
+        start_template: "main_template",
+        send_email: "1"
+    }
+    }, function(err, resp, body) {
+    console.log(body);
     });
-*/ 
 
+    var cardTitle = "We're getting the latest weather conditions, please wait a few seconds then say 'update'";
+    var repromptText = "WWe're getting the latest weather conditions, please wait a few seconds then say 'update'";
+    var speechText = "<p>Les Arcs Updater</p> <p>getting your update</p>";
+    var cardOutput = "Les Arcs Updater...getting your update";
+    // If the user either does not reply to the welcome message or says something that is not
+    // understood, they will be prompted again with this text.
+
+    var speechOutput = {
+        speech: "<speak>" + speechText + "</speak>",
+        type: AlexaSkill.speechOutputType.SSML
+    };
+    var repromptOutput = {
+        speech: repromptText,
+        type: AlexaSkill.speechOutputType.PLAIN_TEXT
+    };
+    response.askWithCard(speechOutput, repromptOutput, cardTitle, cardOutput);
 }
 
 /**
